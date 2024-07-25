@@ -5,10 +5,12 @@ import { MongoModule } from './mongo/mongo.module';
 import { PrismaClientModule } from './prisma-client/prisma-client.module';
 import { UsersModule } from './users/users.module';
 import { JwtService } from '@nestjs/jwt';
+import { PackageController } from './package/package.controller';
+import { PackageModule } from './package/package.module';
 
 @Module({
-  imports: [MongoModule, UsersModule, AuthModule, PrismaClientModule],
-  controllers: [AppController],
+  imports: [MongoModule, UsersModule, AuthModule, PrismaClientModule, PackageModule],
+  controllers: [AppController, PackageController],
 })
 export class AppModule implements OnModuleInit {
   constructor(private jwtService: JwtService) {}

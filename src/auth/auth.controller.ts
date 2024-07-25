@@ -33,12 +33,12 @@ export class AuthController {
     });
 
     if (!user) throw new NotFoundException();
-    const recoverCode = randomUUID();
+    const recover_code = randomUUID();
 
-    Logger.warn(`Recover link: ${username}: ${recoverCode}`);
+    Logger.warn(`Recover link: ${username}: ${recover_code}`);
 
     await this.prismaService.user.update({
-      data: { recoverCode },
+      data: { recover_code },
       where: { username },
     });
   }
@@ -47,16 +47,16 @@ export class AuthController {
   @Post('updatePassword')
   async updatePassword(
     @Body()
-    { recoverCode, password }: UpdatePasswordDto,
+    { recover_code, password }: UpdatePasswordDto,
   ) {
     const user = await this.prismaService.user.findUnique({
-      where: { recoverCode },
+      where: { recover_code },
     });
 
     if (!user) throw new NotFoundException();
 
     await this.prismaService.user.update({
-      data: { password, recoverCode: null },
+      data: { password, recover_code: null },
       where: { username: user.username },
     });
 

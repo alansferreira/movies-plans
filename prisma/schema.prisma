@@ -14,8 +14,34 @@ datasource db {
 }
 
 model User {
-  userId      String   @db.VarChar(36)  @id @default(uuid())
-  username    String   @unique
-  password    String?  /// @encrypted
-  recoverCode String?  @unique /// @encrypted
+  username    String   @id
+  password    String?  /// @encrypted:hash(password)?algorithm=sha512
+  recover_code String?  @unique /// @encrypted:hash(recover_code)?algorithm=sha512 @map("recover_code")
+}
+
+model UserPackage {
+  id              String   @db.VarChar(36)  @id @default(uuid())
+  username        String   
+  package_name    String
+
+  @@unique([username, package_name])
+}
+
+model Package {
+  name   String  @id
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  version String
+}
+
+model Genre {
+  name   String  @id
+}
+
+model PackageGenre {
+  id              String   @db.VarChar(36)  @id @default(uuid())
+  genre_name      String   
+  package_name    String
+
+  @@unique([genre_name, package_name])
 }

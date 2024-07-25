@@ -18,7 +18,7 @@ export class AuthService {
     }
 
     // TODO: Generate a JWT and return it here
-    const payload = { sub: user.userId, username: user.username };
+    const payload = { sub: user.username, username: user.username };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
