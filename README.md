@@ -21,8 +21,11 @@ $ yarn prisma migrate deploy
 Mysql:
 http://localhost:8090/index.php?route=/sql&pos=0&db=movies&table=User
 
-Mongo: http://localhost:8081/db/moviesdb/users?skip=0&key=&value=&type=&query=&projection=
+Mongo: 
+http://localhost:8081/db/moviesdb/users?skip=0&key=&value=&type=&query=&projection=
 
+Swagger:
+http://localhost:3000/api
 
 
 ## Running the app
