@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreatePackageDto {
+export class CreatePlanDto {
   @ApiProperty() name: string;
   @ApiProperty() version: string;
 }

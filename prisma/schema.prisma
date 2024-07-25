@@ -14,17 +14,9 @@ datasource db {
 }
 
 model User {
-  username    String   @id
-  password    String?  /// @encrypted:hash(password)?algorithm=sha512
+  username    String    @id
+  password    String?   /// @encrypted:hash(password)?algorithm=sha512
   recover_code String?  @unique /// @encrypted:hash(recover_code)?algorithm=sha512 @map("recover_code")
-}
-
-model UserPlan {
-  id              String   @db.VarChar(36)  @id @default(uuid())
-  username        String   
-  plan_name    String @map("package_name")
-
-  @@unique([username, plan_name])
 }
 
 model Plan {
@@ -32,6 +24,14 @@ model Plan {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   version String
+}
+
+model Subscription {
+  id              String   @db.VarChar(36)  @id @default(uuid())
+  username        String   
+  plan_name       String
+
+  @@unique([username, plan_name])
 }
 
 model Genre {

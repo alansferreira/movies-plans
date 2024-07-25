@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PackageController } from './package.controller';
+import { PlanController } from './plans.controller';
 import { PrismaClientModule } from 'src/prisma-client/prisma-client.module';
 import { MongoModule } from 'src/mongo/mongo.module';
 
 @Module({
   imports: [MongoModule, PrismaClientModule],
-  controllers: [PackageController],
+  controllers: [PlanController],
+  providers: [],
 })
-export class PackageModule {}
+export class PlanModule {}

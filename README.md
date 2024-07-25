@@ -18,15 +18,6 @@ $ docker compose up -d
 $ yarn prisma migrate deploy
 
 ```
-Mysql:
-http://localhost:8090/index.php?route=/sql&pos=0&db=movies&table=User
-
-Mongo: 
-http://localhost:8081/db/moviesdb/users?skip=0&key=&value=&type=&query=&projection=
-
-Swagger:
-http://localhost:3000/api
-
 
 ## Running the app
 
@@ -40,16 +31,13 @@ $ yarn run start:dev
 # production mode
 $ yarn run start:prod
 ```
+## Links
 
-## Test
+Mysql:
+http://localhost:8090/index.php?route=/sql&pos=0&db=movies&table=User
 
-```bash
-# unit tests
-$ yarn run test
+Mongo: 
+http://localhost:8081/db/moviesdb/users?skip=0&key=&value=&type=&query=&projection=
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
+Swagger:
+http://localhost:3000/api

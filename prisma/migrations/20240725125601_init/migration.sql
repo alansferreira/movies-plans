@@ -9,16 +9,6 @@ CREATE TABLE `User` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `UserPlan` (
-    `id` VARCHAR(36) NOT NULL,
-    `username` VARCHAR(191) NOT NULL,
-    `package_name` VARCHAR(191) NOT NULL,
-
-    UNIQUE INDEX `UserPlan_username_package_name_key`(`username`, `package_name`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Plan` (
     `name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -26,6 +16,16 @@ CREATE TABLE `Plan` (
     `version` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`name`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Subscription` (
+    `id` VARCHAR(36) NOT NULL,
+    `username` VARCHAR(191) NOT NULL,
+    `plan_name` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `Subscription_username_plan_name_key`(`username`, `plan_name`),
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable

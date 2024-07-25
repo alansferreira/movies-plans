@@ -16,7 +16,8 @@
         "<node_internals>/**"
       ],
       "type": "node",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}/.env",
     },
     {
       "name": "🚀 Debug",
@@ -30,8 +31,7 @@
       ],
       "type": "node",
       "console": "integratedTerminal",
-      "env": {
-      }
+      "envFile": "${workspaceFolder}/.env",
     }
   ]
 }
