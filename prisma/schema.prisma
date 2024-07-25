@@ -19,15 +19,15 @@ model User {
   recover_code String?  @unique /// @encrypted:hash(recover_code)?algorithm=sha512 @map("recover_code")
 }
 
-model UserPackage {
+model UserPlan {
   id              String   @db.VarChar(36)  @id @default(uuid())
   username        String   
-  package_name    String
+  plan_name    String @map("package_name")
 
-  @@unique([username, package_name])
+  @@unique([username, plan_name])
 }
 
-model Package {
+model Plan {
   name   String  @id
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -38,10 +38,10 @@ model Genre {
   name   String  @id
 }
 
-model PackageGenre {
+model PlanGenre {
   id              String   @db.VarChar(36)  @id @default(uuid())
   genre_name      String   
-  package_name    String
+  plan_name       String
 
-  @@unique([genre_name, package_name])
+  @@unique([genre_name, plan_name])
 }

@@ -9,17 +9,17 @@ CREATE TABLE `User` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `UserPackage` (
+CREATE TABLE `UserPlan` (
     `id` VARCHAR(36) NOT NULL,
     `username` VARCHAR(191) NOT NULL,
     `package_name` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `UserPackage_username_package_name_key`(`username`, `package_name`),
+    UNIQUE INDEX `UserPlan_username_package_name_key`(`username`, `package_name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Package` (
+CREATE TABLE `Plan` (
     `name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
@@ -36,11 +36,11 @@ CREATE TABLE `Genre` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `PackageGenre` (
+CREATE TABLE `PlanGenre` (
     `id` VARCHAR(36) NOT NULL,
     `genre_name` VARCHAR(191) NOT NULL,
-    `package_name` VARCHAR(191) NOT NULL,
+    `plan_name` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `PackageGenre_genre_name_package_name_key`(`genre_name`, `package_name`),
+    UNIQUE INDEX `PlanGenre_genre_name_plan_name_key`(`genre_name`, `plan_name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -21,23 +21,23 @@ export class PackageController {
   @UseGuards(AdminGuard)
   @ApiBearerAuth()
   async create(@Body() newPackage: CreatePackageDto) {
-    await this.prismaService.package.create({ data: newPackage });
+    await this.prismaService.plan.create({ data: newPackage });
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('/:package_name/genre')
+  @Post('/:plan_name/genre')
   @UseGuards(AdminGuard)
   @ApiBearerAuth()
-  @ApiParam({ name: 'package_name' })
+  @ApiParam({ name: 'plan_name' })
   async addGenre(
-    @Param() { package_name }: { package_name: string },
+    @Param() { plan_name }: { plan_name: string },
     @Body() genres: string[],
   ) {
-    await this.prismaService.packageGenre.createMany({
+    await this.prismaService.planGenre.createMany({
       data: genres.map((genre_name) => {
         return {
           genre_name,
-          package_name,
+          plan_name,
         };
       }),
     });
