@@ -12,7 +12,10 @@ import { PrismaService } from 'src/prisma-client/prisma.service';
 import { randomUUID } from 'crypto';
 import { RecoverDto } from './dto/recover.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { SignInDto } from './dto/signin.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Security')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -22,8 +25,8 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  signIn(@Body() creds: SignInDto) {
+    return this.authService.signIn(creds.username, creds.password);
   }
   @HttpCode(HttpStatus.OK)
   @Post('recover')

@@ -22,5 +22,6 @@ import { PrismaClientModule } from 'src/prisma-client/prisma-client.module';
   ],
   providers: [AuthService, PrismaService, MongoService],
   controllers: [AuthController],
+  exports: [AuthService],
 })
 export class AuthModule {}

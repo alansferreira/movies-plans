@@ -1,17 +1,19 @@
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
+import { GenresModule } from './genres/genres.module';
+import { GenresService } from './genres/genres.service';
 import { MongoModule } from './mongo/mongo.module';
-import { PrismaClientModule } from './prisma-client/prisma-client.module';
-import { UsersModule } from './users/users.module';
-import { JwtService } from '@nestjs/jwt';
+import { MongoService } from './mongo/mongo.service';
+import { MoviesModule } from './movies/movies.module';
 import { PlanController } from './plans/plans.controller';
 import { PlanModule } from './plans/plans.module';
+import { PrismaClientModule } from './prisma-client/prisma-client.module';
 import { ThemoviedbModule } from './themoviedb/themoviedb.module';
-import { ScheduleModule } from '@nestjs/schedule';
-import { GenresService } from './genres/genres.service';
-import { MongoService } from './mongo/mongo.service';
-import { GenresModule } from './genres/genres.module';
+import { UsersModule } from './users/users.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   imports: [
@@ -24,19 +26,20 @@ import { GenresModule } from './genres/genres.module';
     AuthModule,
     PlanModule,
     GenresModule,
+    MoviesModule,
+    SubscriptionModule,
   ],
   controllers: [AppController, PlanController],
   providers: [],
 })
 export class AppModule implements OnModuleInit {
   constructor(
-    private jwtService: JwtService,
+    private authService: AuthService,
     private genreService: GenresService,
     private mongoService: MongoService,
   ) {}
   async onModuleInit() {
-    const payload = { sub: '123', username: 'admin' };
-    const access_token = await this.jwtService.signAsync(payload);
+    const { access_token } = await this.authService.sign('admin');
 
     Logger.warn(`Admin Token: ${access_token}`);
 

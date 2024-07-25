@@ -3,6 +3,7 @@ import {
   Controller,
   HttpCode,
   HttpStatus,
+  Logger,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -19,7 +20,11 @@ export class UsersController {
   @Post('create')
   @UseGuards(AdminGuard)
   @ApiBearerAuth()
-  signIn(@Body() newUser: CreateUserDto) {
-    return this.prismaService.user.create({ data: newUser });
+  signUp(@Body() newUser: CreateUserDto) {
+    try {
+      return this.prismaService.user.create({ data: newUser });
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 }

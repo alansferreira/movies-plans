@@ -14,34 +14,47 @@ datasource db {
 }
 
 model User {
-  username    String    @id
+  id   String @db.VarChar(36)  @id @default(uuid()) 
+  username    String    @unique
   password    String?   /// @encrypted:hash(password)?algorithm=sha512
+  email       String
   recover_code String?  @unique /// @encrypted:hash(recover_code)?algorithm=sha512 @map("recover_code")
+
+  Subscriptions Subscription[]
 }
 
 model Plan {
-  name   String  @id
+  id         String @db.VarChar(36)  @id @default(uuid())
+  name       String  @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  version String
+  version    String
+
+  Subscriptions Subscription[]
+
+  PlanGenre PlanGenre[]
 }
+
+
 
 model Subscription {
-  id              String   @db.VarChar(36)  @id @default(uuid())
-  username        String   
-  plan_name       String
+  id   String @db.VarChar(36)  @id @default(uuid())
+  user User  @relation(fields: [user_id], references: [id])
+  user_id String
 
-  @@unique([username, plan_name])
-}
+  plan Plan  @relation(fields: [plan_id], references: [id])
+  plan_id String
 
-model Genre {
-  name   String  @id
+  @@unique([user_id, plan_id])
 }
 
 model PlanGenre {
-  id              String   @db.VarChar(36)  @id @default(uuid())
-  genre_name      String   
-  plan_name       String
+  id          String   @db.VarChar(36)  @id @default(uuid())
+  
+  genre_id    Int
 
-  @@unique([genre_name, plan_name])
+  plan Plan  @relation(fields: [plan_id], references: [id])
+  plan_id     String
+
+  @@unique([genre_id, plan_id])
 }

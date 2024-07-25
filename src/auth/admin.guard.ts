@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -23,7 +24,8 @@ export class AdminGuard implements CanActivate {
         secret: jwtConstants.secret,
       });
       return payload?.username === 'admin';
-    } catch {
+    } catch (error) {
+      Logger.error(error);
       throw new UnauthorizedException();
     }
     return true;

@@ -41,3 +41,15 @@ http://localhost:8081/db/moviesdb/users?skip=0&key=&value=&type=&query=&projecti
 
 Swagger:
 http://localhost:3000/api
+
+
+## Testes
+
+```
+Criar um usuario novo
+{
+  "username": "user-one",
+  "password": "M*e83KJ3*",
+  "email": "mail@mail.com"
+}
+```

@@ -17,10 +17,17 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
+    return this.sign(username);
+  }
+
+  async sign(username: string): Promise<any> {
     // TODO: Generate a JWT and return it here
-    const payload = { sub: user.username, username: user.username };
+    const payload = { sub: username, username };
+    const access_token = await this.jwtService.signAsync(payload, {
+      expiresIn: Number(process.env.JWT_EXPIRATION),
+    });
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token,
     };
   }
 }
