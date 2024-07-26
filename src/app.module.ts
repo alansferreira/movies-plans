@@ -15,9 +15,11 @@ import { ThemoviedbModule } from './themoviedb/themoviedb.module';
 import { UsersModule } from './users/users.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { WatchedModule } from './watched/watched.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     MongoModule,
     PrismaClientModule,

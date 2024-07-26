@@ -9,10 +9,12 @@ import {
 import { Genre, GenreSchema } from './schemas/genre.schema';
 import { Connection, Model } from 'mongoose';
 import { Watched, WatchedSchema } from './schemas/watched.schema';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    NestMongooseModule.forRoot('mongodb://root:example@localhost:27017', {
+    ConfigModule.forRoot(),
+    NestMongooseModule.forRoot(process.env.MONGO_URL, {
       dbName: 'moviesdb',
     }),
     NestMongooseModule.forFeature([
