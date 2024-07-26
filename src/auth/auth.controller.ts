@@ -6,12 +6,10 @@ import {
   Logger,
   NotFoundException,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
 import { PrismaService } from 'src/prisma-client/prisma.service';
-import { AdminGuard } from './admin.guard';
 import { AuthService } from './auth.service';
 import { RecoverDto } from './dto/recover.dto';
 import { SignInDto } from './dto/signin.dto';
@@ -74,12 +72,11 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('signup')
-  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Register new User' })
-  signUp(@Body() newUser: SignUpDto) {
+  async signUp(@Body() newUser: SignUpDto) {
     try {
-      return this.prismaService.user.create({ data: newUser });
+      await this.prismaService.user.create({ data: newUser });
     } catch (error) {
       Logger.error(error);
     }
