@@ -27,9 +27,8 @@ import { ConfigModule } from '@nestjs/config';
   exports: [MongoService, NestMongooseModule],
 })
 export class MongoModule implements OnModuleInit {
-  mongoose: any;
   constructor(
-    @InjectConnection() private readonly connection: Connection,
+    @InjectConnection() readonly connection: Connection,
     @InjectModel(User.name) readonly user: Model<User>,
     @InjectModel(Genre.name) readonly genre: Model<Genre>,
     @InjectModel(Watched.name) readonly watched: Model<Watched>,
