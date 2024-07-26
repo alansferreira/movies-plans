@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma-client/prisma.service';
+import { JWtDataDto } from './dto/jwt-data.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,16 +17,14 @@ export class AuthService {
     if (user?.password !== pass) {
       throw new UnauthorizedException();
     }
-
-    return this.sign(username);
+    const { id: user_id } = user;
+    return this.sign({ user_id, username });
   }
 
-  async sign(username: string): Promise<any> {
+  async sign({ username, user_id }: JWtDataDto): Promise<any> {
     // TODO: Generate a JWT and return it here
-    const payload = { sub: username, username };
-    const access_token = await this.jwtService.signAsync(payload, {
-      expiresIn: Number(process.env.JWT_EXPIRATION),
-    });
+    const payload = { sub: username, username, user_id };
+    const access_token = await this.jwtService.signAsync(payload);
     return {
       access_token,
     };

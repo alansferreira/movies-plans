@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { Genres } from './dto/genres.dto';
 import { MovieResultDto } from './dto/movie-result.dto';
-import { PageableResults } from './dto/pageable-results.dto';
+import { PageableResults } from './dto/pageable.dto';
+import { MovieDetailDto } from './dto/movie-detail.dto';
 
 @Injectable()
 export class ThemoviedbService {
@@ -34,9 +35,22 @@ export class ThemoviedbService {
       ].join(''),
     );
 
-    url.searchParams.append('with_genres', genres_ids.join(','));
+    url.searchParams.append('with_genres', genres_ids.join('|'));
 
-    return await axios.request<PageableResults<MovieResultDto>>({
+    return axios.request<PageableResults<MovieResultDto>>({
+      method: 'GET',
+      url: url.toString(),
+      headers: {
+        ...this.headers,
+      },
+    });
+  }
+  async movie(movie_id: number) {
+    const url = new URL(
+      `https://api.themoviedb.org/3/movie/${movie_id}?language=en-US`,
+    );
+
+    return axios.request<MovieDetailDto>({
       method: 'GET',
       url: url.toString(),
       headers: {

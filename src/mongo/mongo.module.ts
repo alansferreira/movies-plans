@@ -8,6 +8,7 @@ import {
 } from '@nestjs/mongoose';
 import { Genre, GenreSchema } from './schemas/genre.schema';
 import { Connection, Model } from 'mongoose';
+import { Watched, WatchedSchema } from './schemas/watched.schema';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { Connection, Model } from 'mongoose';
     NestMongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Genre.name, schema: GenreSchema },
+      { name: Watched.name, schema: WatchedSchema },
     ]),
   ],
   providers: [MongoService],
@@ -28,6 +30,7 @@ export class MongoModule implements OnModuleInit {
     @InjectConnection() private readonly connection: Connection,
     @InjectModel(User.name) readonly user: Model<User>,
     @InjectModel(Genre.name) readonly genre: Model<Genre>,
+    @InjectModel(Watched.name) readonly watched: Model<Watched>,
   ) {}
   async onModuleInit() {
     await this.connection.syncIndexes();

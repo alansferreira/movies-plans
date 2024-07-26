@@ -14,6 +14,7 @@ import { PrismaClientModule } from './prisma-client/prisma-client.module';
 import { ThemoviedbModule } from './themoviedb/themoviedb.module';
 import { UsersModule } from './users/users.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { WatchedModule } from './watched/watched.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
     GenresModule,
     MoviesModule,
     SubscriptionModule,
+    WatchedModule,
   ],
   controllers: [AppController, PlanController],
   providers: [],
@@ -39,7 +41,10 @@ export class AppModule implements OnModuleInit {
     private mongoService: MongoService,
   ) {}
   async onModuleInit() {
-    const { access_token } = await this.authService.sign('admin');
+    const { access_token } = await this.authService.sign({
+      username: 'admin',
+      user_id: '0',
+    });
 
     Logger.warn(`Admin Token: ${access_token}`);
 

@@ -8,12 +8,18 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiParam } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AdminGuard } from 'src/auth/admin.guard';
 import { PrismaService } from 'src/prisma-client/prisma.service';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { MongoService } from 'src/mongo/mongo.service';
 
+@ApiTags('Billing')
 @Controller('plan')
 export class PlanController {
   constructor(

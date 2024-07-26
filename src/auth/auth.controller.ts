@@ -6,14 +6,17 @@ import {
   Logger,
   NotFoundException,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { PrismaService } from 'src/prisma-client/prisma.service';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
+import { PrismaService } from 'src/prisma-client/prisma.service';
+import { AdminGuard } from './admin.guard';
+import { AuthService } from './auth.service';
 import { RecoverDto } from './dto/recover.dto';
-import { UpdatePasswordDto } from './dto/update-password.dto';
 import { SignInDto } from './dto/signin.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { SignUpDto } from './dto/signup.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @ApiTags('Security')
 @Controller('auth')
@@ -25,11 +28,13 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiOperation({ summary: 'Get token from credentials username + password.' })
   signIn(@Body() creds: SignInDto) {
     return this.authService.signIn(creds.username, creds.password);
   }
   @HttpCode(HttpStatus.OK)
   @Post('recover')
+  @ApiOperation({ summary: 'Get an recovery code to make new password.' })
   async recover(@Body() { username }: RecoverDto) {
     const user = await this.prismaService.user.findUnique({
       where: { username },
@@ -48,6 +53,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('updatePassword')
+  @ApiOperation({ summary: 'Recover password from an recovery code.' })
   async updatePassword(
     @Body()
     { recover_code, password }: UpdatePasswordDto,
@@ -64,5 +70,18 @@ export class AuthController {
     });
 
     return 'ok!';
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('signup')
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Register new User' })
+  signUp(@Body() newUser: SignUpDto) {
+    try {
+      return this.prismaService.user.create({ data: newUser });
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 }

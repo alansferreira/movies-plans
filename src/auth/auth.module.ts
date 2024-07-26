@@ -17,7 +17,7 @@ import { PrismaClientModule } from 'src/prisma-client/prisma-client.module';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION || '24h' },
     }),
   ],
   providers: [AuthService, PrismaService, MongoService],
