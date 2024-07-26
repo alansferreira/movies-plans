@@ -43,13 +43,54 @@ Swagger:
 http://localhost:3000/api
 
 
-## Testes
+## Data examples
 
-```
-Criar um usuario novo
+### New user
+
+```json
 {
   "username": "user-one",
   "password": "M*e83KJ3*",
   "email": "mail@mail.com"
 }
 ```
+
+### Plans
+
+> `Admin token` will output on `console` when application start
+
+```json
+[
+  { "name": "standard", "version": "v1" },
+  { "name": "premium", "version": "v1" }
+]
+```
+
+### Add Genre to Plan
+
+> `Admin token` will output on `console` when application start
+
+plan_name: "standard"
+
+```json
+["Drama", "Family"] 
+```
+plan_name: "premium"
+
+```json
+["Action", "Horror"]
+```
+
+
+### Login user
+
+```json
+{
+  "username": "user-one",
+  "password": "M*e83KJ3*"
+}
+```
+
+### Subscribe user to a plan
+plan_name: `standard`
+
